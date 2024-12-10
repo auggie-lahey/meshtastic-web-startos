@@ -11,7 +11,7 @@ NGINX_CONF="server {
 
 server {
     listen 8080;
-    listen 3443 ssl;
+    listen 8443 ssl;
     ssl_certificate /mnt/cert/main.cert.pem;
     ssl_certificate_key /mnt/cert/main.key.pem;
 
@@ -67,7 +67,7 @@ _term() {
   kill -SIGTERM "$meshtastic_process" 2>/dev/null
 }
 
-nginx -g 'daemon off;' &
+# nginx -g 'daemon off;' &
 mestastic_process=$!
 
 trap _term SIGTERM

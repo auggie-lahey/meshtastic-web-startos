@@ -2,3 +2,5 @@ image.tar
 ride-the-lightning.s9pk
 .vscode/
 docker-images
+*.tar
+*.s9pk
