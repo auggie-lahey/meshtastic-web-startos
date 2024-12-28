@@ -48,7 +48,8 @@ health-checks:
     success-message: The meshtatic is accessible
     type: script
 config: ~
-properties: ~
+# dependencies: {}
+# properties: ~
 #  type: script
 # This denotes any data, asset, or pointer volumes that should be connected when the "docker run" command is invoked
 volumes:
@@ -63,11 +64,11 @@ interfaces:
     description: Meshtastic Web UI
     tor-config:
       port-mapping:
-        80: "80"
+        80: "8080"
     lan-config:
       443:
         ssl: true
-        internal: 80
+        internal: 8080
     ui: true
     protocols:
       - tcp
