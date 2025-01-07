@@ -1,4 +1,4 @@
-PACKAGE_ID := hello-moon
+PACKAGE_ID := meshtastic-web
 
 # Phony targets
 .PHONY: all clean install
