@@ -1,37 +1,33 @@
-PKG_ID := $(shell yq e ".id" manifest.yaml)
-PKG_VERSION := $(shell yq e ".version" manifest.yaml)
-TS_FILES := $(shell find ./ -name \*.ts)
+PACKAGE_ID := hello-moon
 
-# delete the target of a rule if it has changed and its recipe exits with a nonzero exit status
-.DELETE_ON_ERROR:
+# Phony targets
+.PHONY: all clean install
 
-all: verify
+# Default target
+all: ${PACKAGE_ID}.s9pk
 
+# Build targets
+${PACKAGE_ID}.s9pk: $(shell start-cli s9pk list-ingredients)
+	start-cli s9pk pack
+
+javascript/index.js: $(shell git ls-files startos) tsconfig.json node_modules package.json
+	npm run build
+
+node_modules: package.json package-lock.json
+	npm ci
+
+package-lock.json: package.json
+	npm i
+
+# Clean target
 clean:
-	rm -rf docker-images
-	rm -f  $(PKG_ID).s9pk
-	rm -f image.tar
-	rm -f scripts/*.js
+	rm -rf ${PACKAGE_ID}.s9pk
+	rm -rf javascript
+	rm -rf node_modules
 
-verify: $(PKG_ID).s9pk
-	start-sdk verify s9pk $(PKG_ID).s9pk
-
+# Install target
 install:
-	start-cli package install $(PKG_ID).s9pk
-
-docker-images/aarch64.tar: Dockerfile docker_entrypoint.sh 
-ifeq ($(ARCH),x86_64)
-else
-	mkdir -p docker-images
-	docker buildx build --tag start9/$(PKG_ID)/main:$(PKG_VERSION) --build-arg ARCH=aarch64 --build-arg PLATFORM=arm64 --platform=linux/arm64 -o type=docker,dest=docker-images/aarch64.tar .
-endif
-
-docker-images/x86_64.tar: Dockerfile docker_entrypoint.sh
-ifeq ($(ARCH),aarch64)
-else
-	mkdir -p docker-images
-	docker buildx build --tag start9/$(PKG_ID)/main:$(PKG_VERSION) --build-arg ARCH=x86_64 --build-arg PLATFORM=amd64 --platform=linux/amd64 -o type=docker,dest=docker-images/x86_64.tar .
-endif
-
-$(PKG_ID).s9pk: manifest.yaml docker-images/aarch64.tar docker-images/x86_64.tar icon.svg LICENSE
-	start-sdk pack
+	@if [ ! -f ~/.startos/config.yaml ]; then echo "You must define \"host: http://server-name.local\" in ~/.startos/config.yaml config file first."; exit 1; fi
+	@echo "\nInstalling to $$(grep -v '^#' ~/.startos/config.yaml | cut -d'/' -f3) ...\n"
+	@[ -f $(PACKAGE_ID).s9pk ] || ( $(MAKE) && echo "\nInstalling to $$(grep -v '^#' ~/.startos/config.yaml | cut -d'/' -f3) ...\n" )
+	@start-cli package install -s $(PACKAGE_ID).s9pk
