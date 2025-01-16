@@ -8,7 +8,7 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
   const ui = sdk.createInterface(effects, {
     name: 'Web UI',
     id: 'webui',
-    description: 'The web interface of Hello Moon',
+    description: 'The web interface of Meshtastic',
     hasPrimary: false,
     type: 'ui',
     schemeOverride: null,

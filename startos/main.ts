@@ -11,8 +11,8 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    */
   console.info('Starting Meshtastic!')
 
-  const depResult = await sdk.checkDependencies(effects)
-  depResult.throwIfNotSatisfied()
+  // const depResult = await sdk.checkDependencies(effects)
+  // depResult.throwIfNotSatisfied()
 
   /**
    * ======================== Additional Health Checks (optional) ========================

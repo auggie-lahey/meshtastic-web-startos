@@ -10,8 +10,8 @@ export const manifest = setupManifest({
   marketingSite: 'https://start9.com/', //todo
   donationUrl: 'https://donate.start9.com/', //todo
   description: {
-    short: 'Mestastic Web Client',
-    long: 'Meshtastic Web is a Meshtastic client that runs directly in your browser. ',
+    short: 'A Meshtastic client that runs directly in your browser',
+    long: 'An open source, off-grid, decentralized, mesh network built to run on affordable, low-power devices (LORA).',
   },
   assets: [],
   volumes: ['main'],
