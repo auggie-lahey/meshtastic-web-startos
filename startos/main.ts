@@ -33,9 +33,6 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     command: ['nginx', '-g', 'daemon off;'], // The command to start the daemon.
     mounts: sdk.Mounts.of()
       .addVolume('main', null, '/data', false),
-      // .addDependency<
-      //   typeof meshManifest
-      // >('hello-world', 'main', null, '/hello-world', true),
     ready: {
       display: 'Web Interface', // If null, the health check will NOT be displayed to the user. If provided, this string will be the name of the health check and displayed to the user.
       // The function below determines the health status of the daemon.
