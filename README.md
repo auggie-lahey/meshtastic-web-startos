@@ -115,3 +115,15 @@ make install
 Go to your StartOS Services page, select **Mestastic Web**, configure and start the service. Then, verify its interfaces are accessible.
 
 **Done!** 
+
+### Packaging Checklist
+- [ ] README.md - template can be copied from hello-world and adjusted with necessary details
+- [ ] instructions.md - add some basic info about using the service, anything a user might want to know. 
+- [ ] store.ts - if store isn't needed make empty object
+- [ ] In versions directory, adjust the filename and version details to match this version (upstreamVersion:startOSversion for versions and upstreamVersion.startOSversion for filename)
+- [ ] manifest.ts
+- [ ] interfaces.ts - update interfaces
+- [ ] main.ts - update console.info and remove depResult if no dependencies
+
+
+
